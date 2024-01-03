@@ -1,0 +1,10 @@
+server:
+  host: localhost
+  port: 8080
+database:
+  DBName: nuture
+  DBUser: postgres
+  DBPassword: postgres
+  DBHost: localhost
+  Port: 5432
+  SSLMode: prefer
