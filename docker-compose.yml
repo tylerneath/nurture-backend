@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  nurture:
+    image: nurture:latest
+    restart: always
+    environment:
+      - DBName=nuture
+      - DBUser=postgres
+      - DBPassword=postgres
+      - DBHost=localhost
+      - Port=5432
+      - SSLMode=prefer
+    

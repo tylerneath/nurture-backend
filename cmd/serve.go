@@ -4,10 +4,13 @@ Copyright © 2023 Tyler Neath tylerneath24@gmail.com
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/tylerneath/nuture-backend/internal/api"
 	"github.com/tylerneath/nuture-backend/internal/config"
+	"go.uber.org/zap"
 )
 
 // serveCmd represents the serve command
@@ -35,10 +38,15 @@ func init() {
 
 func serve(cmd *cobra.Command, args []string) {
 	cfg := config.Config{}
+	logger := zap.Must(zap.NewDevelopment())
 
-	viper.UnmarshalKey("database", &cfg)
+	defer logger.Sync() // flushes buffer, if any
+
+	if err := viper.UnmarshalKey("database", &cfg); err != nil {
+		fmt.Errorf("viper not working")
+	}
 
 	print(cfg.String())
 
-	api.Run()
+	api.Run(cmd.Context(), cfg, logger)
 }

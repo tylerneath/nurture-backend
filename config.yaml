@@ -8,3 +8,7 @@ database:
   DBHost: localhost
   Port: 5432
   SSLMode: prefer
+twilio:
+  TwilioUserSID: US56f503b20bca6cec5bdc529b3df1aaac
+  TwilioAccountSID: ACfeacf3a3a78463bfd8cc637e12733f98
+  TwilioAuthToken: 41167311b65d6acea0b9152b7b8a0c99

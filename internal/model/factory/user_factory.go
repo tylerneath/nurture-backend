@@ -14,13 +14,14 @@ func MakeFakeUser() (*models.User, error) {
 		return nil, err
 	}
 
+	username := gofakeit.Username()
 	u := models.User{
 		Base: models.Base{
 			ID:        id,
 			CreatedAt: time.Now(),
 			UpdatedAt: time.Now(),
 		},
-		Username: gofakeit.Username(),
+		Username: &username,
 		Email:    gofakeit.Email(),
 	}
 

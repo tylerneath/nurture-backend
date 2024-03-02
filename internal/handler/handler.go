@@ -2,42 +2,21 @@ package handler
 
 import (
 	"context"
-	"errors"
 
-	models "github.com/tylerneath/nuture-backend/internal/model"
-	"gorm.io/gorm"
+	"github.com/tylerneath/nuture-backend/internal/service"
+	"go.uber.org/zap"
 )
 
-type (
-	UserHandler struct {
-		db gorm.DB
-	}
-	MessageHandler struct {
-		db gorm.DB
-	}
-)
+type Handler struct {
+	UserHandler    UserHandler
+	MessageHandler MessageHandler
+}
 
-func New(ctx context.Context, db gorm.DB) (*UserHandler, *MessageHandler) {
+func New(ctx context.Context, messageService service.MessageService, userService service.UserService, log *zap.Logger) (*UserHandler, *MessageHandler) {
 	return &UserHandler{
-			db: db,
+			userService: userService,
+			log:         log,
 		}, &MessageHandler{
-			db: db,
+			messageService: messageService,
 		}
-}
-
-func (v *UserHandler) createUser() error {
-	return errors.New("implement me")
-}
-
-func (v *UserHandler) deleteUser() error {
-	return errors.New("implement me")
-}
-
-func (v *UserHandler) getUser() (models.User, error) {
-	var user models.User
-	return user, errors.New("implement me")
-}
-
-func (v *MessageHandler) createMessage() error {
-	return errors.New("implement me")
 }

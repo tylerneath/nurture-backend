@@ -1,8 +1,18 @@
-FROM golang:1.16 as base
+# syntax=docker/dockerfile:1
 
-FROM base as dev
+FROM golang:1.19
 
-RUN curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
+WORKDIR /app
 
-WORKDIR /opt/app/api
-CMD ["air"]
+COPY go.mod go.sum ./
+
+RUN go mod download 
+
+COPY . ./
+
+RUN CGO_ENABLED=0 GOOS=linux go build -o /nurture 
+
+EXPOSE 8080
+CMD [ "/nurture","serve" ]
+
+

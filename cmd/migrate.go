@@ -8,6 +8,7 @@ import (
 	"github.com/tylerneath/nuture-backend/internal/config"
 	models "github.com/tylerneath/nuture-backend/internal/model"
 	"github.com/tylerneath/nuture-backend/internal/store"
+	"gorm.io/gorm/logger"
 )
 
 var migrateCmd = &cobra.Command{
@@ -25,11 +26,13 @@ func migrate(cmd *cobra.Command, args []string) {
 	cfg := config.Config{}
 	viper.UnmarshalKey("database", &cfg)
 	db := store.MustCreateNewDB(cfg)
+	db.Logger.LogMode(logger.Info)
 
 	if err := db.Exec("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"").Error; err != nil {
 		panic(fmt.Sprintf("error creating extension: %v", err))
 	}
 
-	db.AutoMigrate(&models.User{}, &models.Message{}, &models.MessageType{})
+	println("applying migrations")
+	db.AutoMigrate(&models.User{}, &models.Message{})
 
 }

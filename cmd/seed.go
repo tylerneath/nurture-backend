@@ -35,12 +35,11 @@ func seed(cmd *cobra.Command, args []string) {
 	// if there are immediately exist
 	// else, run queries into the new db
 	db := store.MustCreateNewDB(cfg)
-	db.AutoMigrate(&models.User{}, &models.Message{}, &models.MessageType{})
+	db.AutoMigrate(&models.User{}, &models.Message{})
 
 	// create two new users
 	for i := 0; i < 1; i++ {
 		if db.Create(&models.User{
-			Name:  "Tyler Neath",
 			Email: "ragarig",
 		}).Error != nil {
 			fmt.Println("error creating user")
