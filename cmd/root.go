@@ -4,9 +4,10 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"fmt"
+	"log"
 	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -22,7 +23,11 @@ var rootCmd = &cobra.Command{
 		viper.WatchConfig()
 
 		if err := viper.ReadInConfig(); err != nil {
-			fmt.Printf("Error reading config file, %s", err)
+			log.Fatalf("Error reading config file, %s", err)
+		}
+		err := godotenv.Load()
+		if err != nil {
+			log.Fatal("Error loading .env file")
 		}
 
 	},

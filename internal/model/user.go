@@ -10,7 +10,7 @@ type User struct {
 	Username       *string   `gorm:"uniqueIndex;index:idx_username;type:varchar(100)" json:"username"`
 	Email          string    `gorm:"uniqueIndex;default:null;index:idx_email_null;type:varchar(100);not null" json:"email"`
 	Messages       []Message `gorm:"type:uuid;OnDelete:CASCADE;foreignKey:UserID" json:"messages"`
-	HashedPassword string    `json:"-"`
+	HashedPassword string    `gorm:"not null" json:"-"`
 }
 
 func DeleteUser(db *gorm.DB, username string) error {
